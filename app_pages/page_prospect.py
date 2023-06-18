@@ -57,6 +57,8 @@ def page_prospect_body():
     X_live = DrawInputsWidgets()
 
     # predict on live data
+    # we need 2 pipeline to handle target imbalance, one data for cleaning, 
+    # one for feature engineering and another for modelling.
     if st.button("Run Predictive Analysis"):
         churn_prediction = predict_churn(
             X_live, churn_features, churn_pipe_dc_fe, churn_pipe_model)
@@ -94,7 +96,8 @@ def DrawInputsWidgets():
     col5, col6, col7, col8 = st.beta_columns(4)
 
     # We are using these features to feed the ML pipeline - values copied from check_variables_for_UI() result
-
+    # {'InternetService', 'PaymentMethod', 'MonthlyCharges',
+    #     'Contract', 'OnlineBackup', 'PhoneService'}
     # create an empty DataFrame, which will be the live data
     X_live = pd.DataFrame([], index=[0])
 
